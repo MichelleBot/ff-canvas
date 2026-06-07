@@ -1,9 +1,5 @@
 # fake-ff
 
-![npm version](https://img.shields.io/npm/v/fake-ff)
-![npm downloads](https://img.shields.io/npm/dm/fake-ff)
-![license](https://img.shields.io/npm/l/fake-ff)
-
 Fake Free Fire lobby card generator — support bot WA, Telegram, website, dan lainnya.
 
 ## Preview
@@ -23,22 +19,22 @@ const generateFF = require('fake-ff')
 
 // Custom username & lobby
 const result = await generateFF({
-  username: 'Ditzzx',
+  username: 'Michelle',
   lobby: 5
 })
 
 // Custom username, lobby random
 const result = await generateFF({
-  username: 'Ditzzx'
+  username: 'Michelle'
 })
 
 console.log(result)
 // {
 //   status: 'success',
 //   code: 200,
-//   username: 'Ditzzx',
+//   username: 'Michelle',
 //   lobby: 5,
-//   result: './fake-ff/Ditzzx.png'
+//   result: './fake-ff/Michelle.png'
 // }
 ```
 
