@@ -1,6 +1,6 @@
 {
-   "name": "fake-ff",
-   "version": "1.0.2",
+   "name": "ff-canvas",
+   "version": "1.0.0",
    "description": "Fake Free Fire lobby card generator",
    "main": "index.js",
    "type": "module",
@@ -11,13 +11,11 @@
       "free-fire",
       "fake-ff",
       "card-generator",
-      "canvas",
-      "telegram-bot",
-      "whatsapp-bot"
+      "canvas"
    ],
-   "author": "Ditzzx",
+   "author": "Darrel Parker",
    "license": "MIT",
    "peerDependencies": {
-      "@napi-rs/canvas": "^1.0.0"
+      "@napi-rs/canvas": "^1.0.1"
    }
 }
