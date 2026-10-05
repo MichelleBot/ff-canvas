@@ -16,10 +16,8 @@ import { createCanvas, GlobalFonts, loadImage } from '@napi-rs/canvas'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const ASSETS_DIR = path.join(__dirname, 'assets')
-const ASSETS = {
-   font: path.join(ASSETS_DIR, 'fonts', 'TeutonNormal.otf'),
-}
+const fontUrl = 'https://raw.githubusercontent.com/Ditzzx-vibecoder/fake-ff/e9395a9b53e1ae289e2f442b15526f8d6034c541/assets/fonts/TeutonNormal.otf'
+let isFontLoaded = false
 
 const lobbyLinks = Array.from({ length: 30 }, (_, i) => `https://raw.githubusercontent.com/Ditzzx-vibecoder/fake-ff/e9395a9b53e1ae289e2f442b15526f8d6034c541/assets/lobby/${i + 1}.jpg`)
 
@@ -37,9 +35,19 @@ export const config = {
    debug: false,
 }
 
-function loadFont() {
-   if (!fs.existsSync(ASSETS.font)) throw new Error(`Font tidak ditemukan: ${ASSETS.font}`)
-   GlobalFonts.registerFromPath(ASSETS.font, 'TeutonNormal')
+async function loadFont() {
+   if (isFontLoaded) return
+   try {
+      const res = await fetch(fontUrl)
+      if (!res.ok) throw new Error(`Failed to fetch font: ${res.statusText}`)
+      const arrayBuffer = await res.arrayBuffer()
+      const buffer = Buffer.from(arrayBuffer)
+      GlobalFonts.register(buffer, 'TeutonNormal')
+      isFontLoaded = true
+   } catch (error) {
+      console.error('Error loading font from URL:', error)
+      throw error
+   }
 }
 
 function drawGradientUsername(ctx, username, cfg) {
@@ -115,7 +123,7 @@ function drawDebugSafeZone(ctx, cfg) {
 }
 
 export async function generateFF({ username = 'michelle', lobby = null } = {}) {
-   loadFont()
+   await loadFont()
    const lobbyNum = lobby
       ? Math.max(1, Math.min(Number(lobby), 30))
    : Math.floor(Math.random() * 30) + 1
