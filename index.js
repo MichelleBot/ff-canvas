@@ -21,6 +21,8 @@ const ASSETS = {
    font: path.join(ASSETS_DIR, 'fonts', 'TeutonNormal.otf'),
 }
 
+const lobbyLinks = Array.from({ length: 30 }, (_, i) => `https://raw.githubusercontent.com/Ditzzx-vibecoder/fake-ff/e9395a9b53e1ae289e2f442b15526f8d6034c541/assets/lobby/${i + 1}.jpg`)
+
 export const config = {
    canvas: { width: 1920, height: 3416 },
    username: {
@@ -117,13 +119,12 @@ export async function generateFF({ username = 'michelle', lobby = null } = {}) {
    const lobbyNum = lobby
       ? Math.max(1, Math.min(Number(lobby), 30))
    : Math.floor(Math.random() * 30) + 1
-   const lobbyPath = path.join(ASSETS_DIR, 'lobby', `${lobbyNum}.jpg`)
-   if (!fs.existsSync(lobbyPath)) throw new Error(`Lobby ${lobbyNum} tidak ditemukan: ${lobbyPath}`)
+   const lobbyUrl = lobbyLinks[lobbyNum - 1]
 
    const { width, height } = config.canvas
    const canvas = createCanvas(width, height)
    const ctx = canvas.getContext('2d')
-   const lobbyImg = await loadImage(lobbyPath)
+   const lobbyImg = await loadImage(lobbyUrl)
    ctx.drawImage(lobbyImg, 0, 0, width, height)
    drawGradientUsername(ctx, username, config.username)
    if (config.debug) drawDebugSafeZone(ctx, config.username)
